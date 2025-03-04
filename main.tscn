@@ -42,7 +42,7 @@ opening_seed = "CanIHazCheezBurger"
 autostart = true
 
 [node name="Launcher" parent="Level" instance=ExtResource("4_m5pb4")]
-position = Vector2(357, 173)
+position = Vector2(370, 173)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
