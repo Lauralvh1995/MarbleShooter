@@ -1,13 +1,20 @@
 extends PathFollow2D
+class_name Marble
 
 signal marble_entered(color : String, marble_self : Node2D)
 
 @export var movement_speed : float = 100
 @export var reverse_speed : float = 200
-@onready var sprite_2d: Sprite2D = $Sprite2D
+@export var sprite_2d: Sprite2D
+@export var debug_label : Label
+var radius : float
+
 var own_color : String
 enum roll_state {FORWARD, BACKWARD, STOPPED, GAME_OVER}
 var current_roll_state = roll_state.FORWARD
+
+func _ready():
+	radius = $DetectionArea/CollisionShape2D.shape.radius
 
 func _physics_process(delta: float) -> void:
 	match current_roll_state:
@@ -24,7 +31,8 @@ func set_color(index : String):
 
 func _on_marble_entered(body : Node2D):
 	print("I was hit by a "+ body.own_color + " marble")
-	marble_entered.emit(body.own_color, self)
+	var direction = transform.x.dot(position.direction_to(body.position))
+	marble_entered.emit(body.own_color, self, direction)
 	body.kill()
 
 func _start_rollback():
@@ -35,3 +43,6 @@ func _initiate_match(color : String):
 
 func _on_game_over():
 	current_roll_state = roll_state.GAME_OVER
+
+func set_debug_text(text: String):
+	debug_label.text = text

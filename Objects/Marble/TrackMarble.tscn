@@ -1,24 +1,47 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8edqjcyykl2m"]
+[gd_scene load_steps=6 format=3 uid="uid://b8edqjcyykl2m"]
 
 [ext_resource type="Script" path="res://Objects/Marble/marble.gd" id="1_up44j"]
 [ext_resource type="Texture2D" uid="uid://oul22r3en8ox" path="res://Objects/Marble/debug_marble.png" id="2_dpfjt"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ubggp"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_hphw5"]
+radius = 26.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_naujg"]
 radius = 25.0
 
-[node name="Marble" type="PathFollow2D" groups=["GameOverListeners"]]
+[sub_resource type="LabelSettings" id="LabelSettings_wskx0"]
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Marble" type="PathFollow2D" node_paths=PackedStringArray("sprite_2d", "debug_label") groups=["GameOverListeners"]]
 loop = false
 script = ExtResource("1_up44j")
+sprite_2d = NodePath("Sprite2D")
+debug_label = NodePath("IndexLabel")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(2.38419e-07, 2.38419e-07)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_dpfjt")
 
-[node name="Marble" type="Area2D" parent="."]
+[node name="DetectionArea" type="Area2D" parent="."]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Marble"]
-shape = SubResource("CircleShape2D_ubggp")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_hphw5")
 
-[connection signal="body_entered" from="Marble" to="." method="_on_marble_entered"]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_naujg")
+debug_color = Color(0.652031, 0.145075, 1, 0.419608)
+
+[node name="IndexLabel" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -12.0
+offset_right = 20.0
+offset_bottom = 11.0
+text = "XXXX"
+label_settings = SubResource("LabelSettings_wskx0")
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_marble_entered"]

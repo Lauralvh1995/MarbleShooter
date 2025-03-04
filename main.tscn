@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5j7tof77empx"]
+[gd_scene load_steps=10 format=3 uid="uid://c5j7tof77empx"]
 
 [ext_resource type="Script" path="res://Objects/Tracks/marble_spawn_point.gd" id="1_6ti5o"]
+[ext_resource type="Script" path="res://marble_manager.gd" id="1_42fmg"]
 [ext_resource type="Script" path="res://Objects/Tracks/end_of_track.gd" id="3_klsx8"]
 [ext_resource type="Texture2D" uid="uid://b3x5wdqlaw3fl" path="res://icon.svg" id="4_j0ini"]
 [ext_resource type="PackedScene" uid="uid://xwotlww2hbqy" path="res://Objects/Launcher/launcher.tscn" id="4_m5pb4"]
@@ -20,9 +21,13 @@ size = Vector2(1920, 1080)
 
 [node name="Main" type="Node2D"]
 
-[node name="Level" type="Node2D" parent="." groups=["Level"]]
+[node name="Level" type="Node2D" parent="."]
 
-[node name="Track" type="Path2D" parent="Level"]
+[node name="MarbleManager" type="Node2D" parent="Level" node_paths=PackedStringArray("track") groups=["MarbleManager"]]
+script = ExtResource("1_42fmg")
+track = NodePath("../Track")
+
+[node name="Track" type="Path2D" parent="Level" groups=["Level"]]
 curve = SubResource("Curve2D_r33qo")
 
 [node name="EndOfTrack" type="Area2D" parent="Level" node_paths=PackedStringArray("track")]
