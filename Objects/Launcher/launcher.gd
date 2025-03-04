@@ -32,7 +32,7 @@ func _physics_process(delta: float) -> void:
 			_swap()
 
 func _shoot():
-	print("PEW!")
+	print("PEW!!!!")
 	pass
 
 func _swap():
