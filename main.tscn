@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c5j7tof77empx"]
+[gd_scene load_steps=9 format=3 uid="uid://c5j7tof77empx"]
 
 [ext_resource type="Script" path="res://Objects/Tracks/marble_spawn_point.gd" id="1_6ti5o"]
 [ext_resource type="Script" path="res://Objects/Tracks/end_of_track.gd" id="3_klsx8"]
 [ext_resource type="Texture2D" uid="uid://b3x5wdqlaw3fl" path="res://icon.svg" id="4_j0ini"]
 [ext_resource type="PackedScene" uid="uid://xwotlww2hbqy" path="res://Objects/Launcher/launcher.tscn" id="4_m5pb4"]
+[ext_resource type="Script" path="res://game_box.gd" id="5_lnk77"]
 
 [sub_resource type="Curve2D" id="Curve2D_r33qo"]
 _data = {
@@ -13,6 +14,9 @@ point_count = 12
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g3iee"]
 radius = 25.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dyuh6"]
+size = Vector2(1920, 1080)
 
 [node name="Main" type="Node2D"]
 
@@ -32,21 +36,33 @@ texture = ExtResource("4_j0ini")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/EndOfTrack"]
 shape = SubResource("CircleShape2D_g3iee")
 
-[node name="MarbleSpawnPoint" type="Node2D" parent="Level" node_paths=PackedStringArray("track")]
+[node name="MarbleSpawnPoint" type="Node2D" parent="Level" node_paths=PackedStringArray("track") groups=["GameOverListeners"]]
 position = Vector2(120, 71)
 script = ExtResource("1_6ti5o")
 track = NodePath("../Track")
 opening_seed = "CanIHazCheezBurger"
 
 [node name="Timer" type="Timer" parent="Level/MarbleSpawnPoint"]
+wait_time = 0.5
 autostart = true
 
-[node name="Launcher" parent="Level" instance=ExtResource("4_m5pb4")]
-position = Vector2(370, 173)
+[node name="Launcher" parent="Level" groups=["GameOverListeners"] instance=ExtResource("4_m5pb4")]
+position = Vector2(990, 365)
+
+[node name="GameBox" type="Area2D" parent="Level"]
+position = Vector2(960, 540)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("5_lnk77")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/GameBox"]
+shape = SubResource("RectangleShape2D_dyuh6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
+[connection signal="area_entered" from="Level/EndOfTrack" to="Level/EndOfTrack" method="_end_of_track_reached"]
 [connection signal="timeout" from="Level/MarbleSpawnPoint/Timer" to="Level/MarbleSpawnPoint" method="_spawn_marble"]
+[connection signal="body_exited" from="Level/GameBox" to="Level/GameBox" method="_on_game_box_body_exited"]

@@ -28,7 +28,6 @@ window/size/window_width_override=960
 window/size/window_height_override=540
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
-window/stretch/scale_mode="integer"
 
 [dotnet]
 
@@ -38,6 +37,10 @@ project/assembly_name="MarbleShooter"
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[global_group]
+
+GameOverListeners=""
 
 [input]
 

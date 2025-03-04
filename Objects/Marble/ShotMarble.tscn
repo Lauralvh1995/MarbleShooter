@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_xk1o1"]
 radius = 25.0
 
-[node name="ShotMarble" type="CharacterBody2D" node_paths=PackedStringArray("sprite_2d")]
+[node name="ShotMarble" type="CharacterBody2D" node_paths=PackedStringArray("sprite_2d") groups=["GameOverListeners"]]
 collision_layer = 2
 script = ExtResource("1_sakuw")
 movement_speed = 20000.0
@@ -22,7 +22,7 @@ texture = ExtResource("1_6aluo")
 
 [node name="Timer" type="Timer" parent="."]
 process_callback = 0
-wait_time = 10.0
+wait_time = 5.0
 one_shot = true
 autostart = true
 

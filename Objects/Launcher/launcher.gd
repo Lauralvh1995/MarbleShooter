@@ -15,6 +15,7 @@ var temp_hold_for_swap : String
 @export var shoot_cooldown : float = 0.5
 @onready var shoot_cooldown_timer: Timer = $Timer
 var can_shoot : bool = true
+var game_over : bool = false
 
 func _ready() -> void:
 	launch_color = GlobalVariables.color_strings.find_key(randi_range(0,9))
@@ -23,9 +24,10 @@ func _ready() -> void:
 	_set_swap_sprite_color()
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		look_at(event.position)
-		#may turn it into a paddle on a track, but for now the rotating face works
+	if not game_over:
+		if event is InputEventMouseMotion:
+			look_at(event.position)
+			#may turn it into a paddle on a track, but for now the rotating face works
 
 func _physics_process(delta: float) -> void:
 	if can_shoot:
@@ -55,6 +57,10 @@ func _shoot():
 func _block_shoot():
 	can_shoot = false
 	shoot_cooldown_timer.start(shoot_cooldown)
+
+func _game_over():
+	can_shoot = false
+	game_over = true
 
 func _unblock_shoot():
 	can_shoot = true

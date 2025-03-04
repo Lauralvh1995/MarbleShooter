@@ -12,6 +12,10 @@ func set_color(index : String):
 	var color = GlobalVariables.color_dictionary[index]
 	own_color = index
 	sprite_2d.set_modulate(color)
+	print(GlobalVariables.game_over.connect(kill))
+	
 
 func kill():
+	if GlobalVariables.game_over.is_connected(kill):
+		GlobalVariables.game_over.disconnect(kill)
 	queue_free()
