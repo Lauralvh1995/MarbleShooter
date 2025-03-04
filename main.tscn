@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://c5j7tof77empx"]
+
+[ext_resource type="Script" path="res://Objects/Tracks/marble_spawn_point.gd" id="1_6ti5o"]
+[ext_resource type="Script" path="res://Objects/Tracks/end_of_track.gd" id="3_klsx8"]
+[ext_resource type="Texture2D" uid="uid://b3x5wdqlaw3fl" path="res://icon.svg" id="4_j0ini"]
+[ext_resource type="PackedScene" uid="uid://xwotlww2hbqy" path="res://Objects/Launcher/launcher.tscn" id="4_m5pb4"]
+
+[sub_resource type="Curve2D" id="Curve2D_r33qo"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 120, 76, -24.9002, -22.6308, 24.9002, 22.6308, 177, 305, -18.3225, 34.6934, 18.3225, -34.6934, 738, 319, -93.4388, 55.3959, 93.4388, -55.3959, 660, 183, -136.821, 8.67646, 136.821, -8.67646, 1107, 105, -5.33936, -28.6991, 5.33936, 28.6991, 1675, 145, 3.3371, -89.4343, -3.3371, 89.4343, 1582, 331, -28.5732, -26.9858, 28.5732, 26.9858, 1758, 462, 26.0294, -4.00452, -26.0294, 4.00452, 1754, 811, 124.14, 2.00226, -124.14, -2.00226, 1230, 733, 15.3507, 11.3461, -15.3507, -11.3461, 255, 711, 0, 0, 0, 0, 241, 493)
+}
+point_count = 12
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g3iee"]
+radius = 25.0
+
+[node name="Main" type="Node2D"]
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Track" type="Path2D" parent="Level"]
+curve = SubResource("Curve2D_r33qo")
+
+[node name="EndOfTrack" type="Area2D" parent="Level" node_paths=PackedStringArray("track")]
+position = Vector2(242, 495)
+script = ExtResource("3_klsx8")
+track = NodePath("../Track")
+
+[node name="Sprite2D" type="Sprite2D" parent="Level/EndOfTrack"]
+texture = ExtResource("4_j0ini")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/EndOfTrack"]
+shape = SubResource("CircleShape2D_g3iee")
+
+[node name="MarbleSpawnPoint" type="Node2D" parent="Level" node_paths=PackedStringArray("track")]
+position = Vector2(120, 71)
+script = ExtResource("1_6ti5o")
+track = NodePath("../Track")
+opening_seed = "CanIHazCheezBurger"
+
+[node name="Timer" type="Timer" parent="Level/MarbleSpawnPoint"]
+autostart = true
+
+[node name="Launcher" parent="Level" instance=ExtResource("4_m5pb4")]
+position = Vector2(357, 173)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+
+[connection signal="timeout" from="Level/MarbleSpawnPoint/Timer" to="Level/MarbleSpawnPoint" method="_spawn_marble"]

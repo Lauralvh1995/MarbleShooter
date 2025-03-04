@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8edqjcyykl2m"]
+
+[ext_resource type="Script" path="res://Objects/Marble/marble.gd" id="1_up44j"]
+[ext_resource type="Texture2D" uid="uid://oul22r3en8ox" path="res://Objects/Marble/debug_marble.png" id="2_dpfjt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ubggp"]
+radius = 25.0
+
+[node name="Marble" type="PathFollow2D"]
+loop = false
+script = ExtResource("1_up44j")
+movement_speed = 50.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.38419e-07, 2.38419e-07)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_dpfjt")
+
+[node name="Marble" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Marble"]
+shape = SubResource("CircleShape2D_ubggp")
