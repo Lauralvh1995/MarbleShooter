@@ -16,7 +16,7 @@ radius = 25.0
 
 [node name="Main" type="Node2D"]
 
-[node name="Level" type="Node2D" parent="."]
+[node name="Level" type="Node2D" parent="." groups=["Level"]]
 
 [node name="Track" type="Path2D" parent="Level"]
 curve = SubResource("Curve2D_r33qo")

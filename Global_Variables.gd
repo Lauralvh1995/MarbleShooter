@@ -1,5 +1,7 @@
 extends Node
 
+var trackMarble : PackedScene = preload("res://Objects/Marble/TrackMarble.tscn")
+
 var color_dictionary : Dictionary = {
 	"RED" = Color.RED,
 	"GREEN" = Color.GREEN,

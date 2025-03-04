@@ -1,7 +1,6 @@
 extends Node2D
 
 @export var enabled : bool = false
-@export var marble_set : PackedScene = preload("res://Objects/Marble/TrackMarble.tscn")
 @export var track : Path2D
 @export var opening_seed : String
 
@@ -27,12 +26,15 @@ func _parse_opening_seed() -> void:
 	print(seed_as_string)
 
 func _spawn_marble() -> void:
-	var spawn_marble = marble_set.instantiate()
+	var spawn_marble = GlobalVariables.trackMarble.instantiate()
 	track.add_child(spawn_marble)
 	if seed_position <= numerical_seed.length() - 1:
 		var index = numerical_seed[seed_position].to_int()
-		print(index)
-		spawn_marble.set_color(index)
+		var color_index : String
+		color_index = GlobalVariables.color_strings.find_key(index)
+		spawn_marble.set_color(color_index)
 		seed_position += 1
 	else:
-		spawn_marble.set_color(-1)
+		var color_index : String
+		color_index = GlobalVariables.color_strings.find_key(randi_range(0,9))
+		spawn_marble.set_color(color_index)

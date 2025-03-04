@@ -6,6 +6,7 @@
 
 [node name="Launcher" type="Node2D"]
 script = ExtResource("1_2iyjf")
+shoot_cooldown = 0.2
 
 [node name="LauncherBody" type="Sprite2D" parent="."]
 rotation = -1.5708
@@ -22,3 +23,9 @@ texture = ExtResource("3_xtvi5")
 position = Vector2(-41, 0)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_xtvi5")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_unblock_shoot"]

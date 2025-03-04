@@ -16,7 +16,10 @@ position = Vector2(2.38419e-07, 2.38419e-07)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_dpfjt")
 
-[node name="Marble" type="CharacterBody2D" parent="."]
+[node name="Marble" type="Area2D" parent="."]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Marble"]
 shape = SubResource("CircleShape2D_ubggp")
+
+[connection signal="body_entered" from="Marble" to="." method="_on_marble_entered"]
