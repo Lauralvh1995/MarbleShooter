@@ -11,6 +11,7 @@ var seed_position := 0
 
 func _ready() -> void:
 	global_position = track.curve.get_point_position(0)
+	GlobalVariables.game_over.connect(_game_over)
 	marble_manager = get_tree().get_nodes_in_group("MarbleManager")[0]
 	_parse_opening_seed()
 	enabled = true
@@ -48,6 +49,6 @@ func _spawn_marble() -> void:
 		pass
 
 func _game_over():
-	timer.pause()
+	timer.stop()
 	timer.autostart = false
 	enabled = false

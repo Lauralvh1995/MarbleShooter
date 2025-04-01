@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-@export var movement_speed : float = 10000
-@export var sprite_2d: Sprite2D
+@export var movement_speed : float = 100000
+@export var sprite_2d: AnimatedSprite2D
 var own_color : String
 
 func _physics_process(delta: float) -> void:
@@ -13,7 +13,6 @@ func set_color(index : String):
 	own_color = index
 	sprite_2d.set_modulate(color)
 	print(GlobalVariables.game_over.connect(kill))
-	
 
 func kill():
 	if GlobalVariables.game_over.is_connected(kill):

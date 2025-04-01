@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://xwotlww2hbqy"]
+[gd_scene load_steps=7 format=3 uid="uid://xwotlww2hbqy"]
 
 [ext_resource type="Script" path="res://Objects/Launcher/launcher.gd" id="1_2iyjf"]
 [ext_resource type="Texture2D" uid="uid://b3x5wdqlaw3fl" path="res://icon.svg" id="2_li7v0"]
-[ext_resource type="Texture2D" uid="uid://oul22r3en8ox" path="res://Objects/Marble/debug_marble.png" id="3_xtvi5"]
+[ext_resource type="Texture2D" uid="uid://dasnfr341fsbi" path="res://Objects/Marble/ColorSprites/0000.png" id="3_vjo0h"]
+[ext_resource type="Texture2D" uid="uid://bsjtf48tkbdsw" path="res://Objects/Marble/OverlaySprites/0000.png" id="4_vx328"]
+[ext_resource type="Texture2D" uid="uid://c4rkt0bgbllei" path="res://Objects/Marble/ColorSprites/0015.png" id="5_tcodh"]
+[ext_resource type="Texture2D" uid="uid://41oi1h7iaa" path="res://Objects/Marble/OverlaySprites/0015.png" id="6_ydccu"]
 
 [node name="Launcher" type="Node2D"]
 script = ExtResource("1_2iyjf")
@@ -16,13 +19,22 @@ texture = ExtResource("2_li7v0")
 position = Vector2(37, 0)
 
 [node name="NextMarble" type="Sprite2D" parent="MarbleLaunchPoint"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_xtvi5")
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_vjo0h")
+
+[node name="NextMarbleOverlay" type="Sprite2D" parent="MarbleLaunchPoint"]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_vx328")
 
 [node name="SwappableMarble" type="Sprite2D" parent="."]
 position = Vector2(-41, 0)
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("3_xtvi5")
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("5_tcodh")
+
+[node name="SwappableMarbleOverlay" type="Sprite2D" parent="."]
+position = Vector2(-41, 0)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("6_ydccu")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8edqjcyykl2m"]
+[gd_scene load_steps=7 format=3 uid="uid://b8edqjcyykl2m"]
 
 [ext_resource type="Script" path="res://Objects/Marble/marble.gd" id="1_up44j"]
-[ext_resource type="Texture2D" uid="uid://oul22r3en8ox" path="res://Objects/Marble/debug_marble.png" id="2_dpfjt"]
+[ext_resource type="SpriteFrames" uid="uid://3y7q1k6cc1f6" path="res://Objects/Marble/ColorSprites/GrayscaleMarbleFrames.tres" id="2_41bm4"]
+[ext_resource type="SpriteFrames" uid="uid://corws3ymimylf" path="res://Objects/Marble/OverlaySprites/OverlayFrames.tres" id="3_shnwe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hphw5"]
 radius = 26.0
@@ -13,16 +14,27 @@ radius = 25.0
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
-[node name="Marble" type="PathFollow2D" node_paths=PackedStringArray("sprite_2d", "debug_label") groups=["GameOverListeners"]]
+[node name="Marble" type="PathFollow2D" node_paths=PackedStringArray("color_sprite_2d", "overlay_sprite_2d", "debug_label") groups=["GameOverListeners"]]
 loop = false
 script = ExtResource("1_up44j")
-sprite_2d = NodePath("Sprite2D")
+color_sprite_2d = NodePath("Sprite2D")
+overlay_sprite_2d = NodePath("Overlay")
 debug_label = NodePath("IndexLabel")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(2.38419e-07, 2.38419e-07)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_dpfjt")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(4.76837e-07, 0)
+scale = Vector2(0.1, 0.1)
+sprite_frames = ExtResource("2_41bm4")
+animation = &"Roll"
+autoplay = "Roll"
+speed_scale = 0.5
+
+[node name="Overlay" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+sprite_frames = ExtResource("3_shnwe")
+animation = &"Roll"
+autoplay = "Roll"
+speed_scale = 0.5
 
 [node name="DetectionArea" type="Area2D" parent="."]
 collision_mask = 2
@@ -31,6 +43,7 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_hphw5")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+motion_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CircleShape2D_naujg")
@@ -43,5 +56,7 @@ offset_right = 20.0
 offset_bottom = 11.0
 text = "XXXX"
 label_settings = SubResource("LabelSettings_wskx0")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_marble_entered"]

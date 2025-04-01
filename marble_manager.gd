@@ -39,12 +39,50 @@ func add_marble_from_shot(color: String, marble : Marble, direction : float):
 	_update_labels()
 
 func _match_marbles(marble: Marble):
-	print("matching is not implemented yet")
+	var match_start_index = marble_array.find(marble)
+	var matched_marbles_array : Array[Marble]
+	matched_marbles_array.append(marble)
+	
+	var first_marble_outside_match : Marble
+	var last_marble_outside_match : Marble
+	#for loop for matching forward
+	for i in range(match_start_index+1,marble_array.size()-1 ):
+		if marble_array[i].own_color == marble.own_color:
+			print(marble_array[i].own_color)
+			matched_marbles_array.append(marble_array[i])
+		else:
+			if i < marble_array.size():
+				last_marble_outside_match = marble_array[i]
+			break
+	#for loop matching backward
+	for i in range(match_start_index-1, -1, -1):
+		if marble_array[i].own_color == marble.own_color:
+			matched_marbles_array.append(marble_array[i])
+		else:
+			if i >= 0:
+				first_marble_outside_match = marble_array[i]
+			break
+	
+	#check if match is big enough
+	if matched_marbles_array.size() >= GlobalVariables.min_match_size:
+		print("MATCH!")
+		for i in matched_marbles_array:
+			#delete matched marbles
+			marble_array.erase(i)
+			i.queue_free()
+		if first_marble_outside_match && last_marble_outside_match:
+			_gap_check(first_marble_outside_match, last_marble_outside_match)
 	_update_labels()
-	#TODO: Implement matching
-	pass
 
 func _update_labels():
 	for index in marble_array:
 		var marble = index as Marble
 		marble.set_debug_text(str(marble_array.find(marble)))
+
+func _gap_check(before_gap: Marble, after_gap : Marble):
+	print("GAP CHECK")
+	for i in range(marble_array.find(before_gap), -1, -1):
+		marble_array[i].stop()
+	if before_gap.own_color == after_gap.own_color:
+		for i in range(marble_array.find(before_gap), -1, -1):
+			marble_array[i].start_rollback()
